@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Đánh Giá Năng Lực Học Viên Đa Năng</title>
+<style>
+  :root { 
+    --navy: #1F3864; --light: #D6E4F0; --grey: #f4f6f9; 
+    --warn: #c0392b; --ok: #1e7e34; --accent: #2e5b9e; --sub-bg: #eaf1f8;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: Arial, Helvetica, sans-serif; margin: 0; background: var(--grey); color: #222; font-size: 13.5px; line-height: 1.4; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 16px; }
+  header { background: var(--navy); color: #fff; padding: 20px 24px; border-radius: 8px 8px 0 0; }
+  header h1 { margin: 0; font-size: 22px; text-transform: uppercase; }
+  header p { margin: 6px 0 0; font-size: 13px; opacity: .9; }
+  .card { background: #fff; padding: 20px 24px; border: 1px solid #dde3ec; border-top: none; }
+  .info { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 24px; margin-bottom: 16px; }
+  .info label { font-weight: bold; font-size: 12px; display: block; margin-bottom: 5px; color: var(--navy); }
+  .info input, .info select { width: 100%; padding: 8px 10px; border: 1px solid #bbb; border-radius: 4px; font-size: 13px; }
+  .info select { background: #fffde6; border-color: var(--navy); font-weight: bold; color: var(--navy); }
+  .info input:focus, .info select:focus { outline: 2px solid var(--navy); }
+  .legend { font-size: 12.5px; background: #fffbe6; border: 1px solid #f0e2a0; padding: 12px 14px; border-radius: 6px; margin: 16px 0; color: #444; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  th, td { border: 1px solid #ccd4e0; padding: 8px 10px; vertical-align: middle; text-align: left; }
+  th { background: var(--navy); color: #fff; font-size: 13px; text-transform: uppercase; }
+  .sec td { background: var(--light); font-weight: bold; font-size: 14px; color: var(--navy); text-transform: uppercase; }
+  .sub-heading-row td.sub-title { background-color: var(--sub-bg); color: var(--navy); font-weight: bold; font-size: 12.5px; padding: 6px 10px; border-right: none; }
+  .sub-heading-row td.score-empty { background-color: var(--sub-bg); border-left: none; }
+  .crit { font-size: 13px; vertical-align: middle; padding-left: 20px !important; color: #333; }
+  td.score { width: 90px; text-align: center; }
+  td.savg { width: 90px; text-align: center; font-weight: bold; background: #fafcff; font-size: 16px; color: var(--navy); }
+  input.sc { width: 60px; padding: 6px; text-align: center; border: 2px solid #e6c200; background: #fffde6; border-radius: 4px; font-size: 14px; font-weight: bold; }
+  input.sc:focus { outline: 2px solid var(--navy); background: #fff; }
+  textarea.cm { width: 100%; height: 100%; min-height: 70px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; padding: 8px; font-family: inherit; resize: vertical; display: block; }
+  .totals { display: flex; gap: 16px; margin-top: 20px; flex-wrap: wrap; }
+  .tot-box { flex: 1; min-width: 230px; background: var(--light); border-radius: 8px; padding: 16px 20px; }
+  .tot-box .num { font-size: 32px; font-weight: bold; color: var(--navy); margin-top: 5px; }
+  .tot-box .lbl { font-size: 12px; font-weight: bold; color: var(--navy); text-transform: uppercase; }
+  #overall-result { font-size: 20px; font-weight: bold; margin-top: 6px; color: var(--navy); }
+  .recommendation { margin-top: 20px; background: #fafbfc; border: 1px solid #dde3ec; border-radius: 6px; padding: 16px 20px; }
+  .recommendation h3 { margin: 0 0 10px 0; font-size: 14.5px; color: var(--navy); text-transform: uppercase;}
+  .recommendation textarea { width: 100%; min-height: 80px; border: 1px solid #ccc; border-radius: 4px; padding: 10px; font-family: inherit; font-size: 13.5px; }
+  .btns { margin: 24px 0; display: flex; gap: 12px; justify-content: center; }
+  button { background: var(--navy); color: #fff; border: none; padding: 12px 24px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+  button:hover { background: var(--accent); }
+  button.alt { background: #666; }
+  button.alt:hover { background: #444; }
+  @media print {
+    .btns, .legend { display: none; }
+    body { background: #fff; font-size: 12px; }
+    .wrap { padding: 0; width: 100%; max-width: 100%; }
+    .card { border: none; padding: 0; }
+    textarea.cm, input, select { border: 1px solid #999; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Phiếu Đánh Giá Năng Lực Học Viên (Multi-Program)</h1>
+    <p>Placement Test & Diagnostic Assessment Form</p>
+  </header>
+
+  <div class="card">
+    <div class="info">
+      <div>
+        <label>Chương trình đánh giá (Test Type)</label>
+        <select id="test-type">
+          <option value="ielts">IELTS (Band 0-9.0)</option>
+          <option value="communication">Giao tiếp / Communication (1-10)</option>
+          <option value="yle">Kids: Movers / Flyers (1-10)</option>
+          <option value="grammar">Basic Grammar (1-10)</option>
+        </select>
+      </div>
+      <div><label>Họ và tên học viên</label><input placeholder="Nguyễn Văn A"></div>
+      <div><label>Mã học viên / Số điện thoại</label><input placeholder="0909xxxxxx"></div>
+      
+      <div><label>Ngày kiểm tra</label><input type="date"></div>
+      <div><label>Giám khảo / Giáo viên</label><input placeholder="Thầy/Cô..."></div>
+      <div><label>Người tư vấn (Consultant)</label><input placeholder="Nhập tên nhân viên tư vấn..."></div>
+    </div>
+
+    <div class="legend" id="legend-text">
+      <!-- Cập nhật tự động qua JS -->
+    </div>
+
+    <table id="tbl">
+      <thead>
+        <tr>
+          <th style="width: 45%">Tiêu chí đánh giá chi tiết</th>
+          <th style="width: 10%; text-align: center;" id="score-header">Điểm</th>
+          <th style="width: 10%; text-align: center;">Trung Bình</th>
+          <th style="width: 35%">Nhận xét chi tiết & Bằng chứng</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Cập nhật tự động qua JS -->
+      </tbody>
+    </table>
+
+    <div class="totals">
+      <div class="tot-box">
+        <div class="lbl">Điểm trung bình (Raw Score)</div>
+        <div class="num"><span id="avg-raw">0.00</span></div>
+      </div>
+      <div class="tot-box">
+        <div class="lbl" id="overall-lbl">Kết quả tổng quát</div>
+        <div id="overall-result">0.0</div>
+      </div>
+    </div>
+
+    <div class="recommendation">
+      <h3>Kết luận & Lộ trình học tập (Dành cho Người tư vấn & Giáo viên)</h3>
+      <textarea placeholder="- Khóa học đề xuất: ...&#10;- Lộ trình dự kiến: ...&#10;- Điểm mạnh / Điểm cần khắc phục: ..."></textarea>
+    </div>
+
+    <div class="btns">
+      <button onclick="window.print()">🖨 In / Lưu PDF</button>
+      <button class="alt" onclick="clearForm()">Xóa form (Reset)</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// --- DATABASE TIÊU CHÍ CHO TỪNG CHƯƠNG TRÌNH ---
+const TEST_DATA = {
+  ielts: {
+    min: 0, max: 9, step: 0.5, type: 'ielts',
+    legend: "Chấm điểm theo IELTS Band (0-9). Điểm trung bình và Overall Band được làm tròn theo luật IELTS (làm tròn lên 0.5 hoặc 1.0 gần nhất).",
+    sections: [
+      ["1. Listening", [
+        { title: "Khả năng nghe & Kỹ năng làm bài", items: ["Nghe hiểu ý chính và chi tiết (Gist & Specific Details)", "Bắt Keyword tốt, không bị lạc nhịp (Lost track)", "Hiểu các diễn đạt thay thế (Paraphrasing)"] }
+      ]],
+      ["2. Speaking", [
+        { title: "Fluency & Pronunciation", items: ["Tốc độ nói tự nhiên, tự sửa lỗi ở mức tối thiểu", "Phát âm rõ ràng, có ngữ điệu và trọng âm chuẩn"] },
+        { title: "Lexical & Grammar", items: ["Dùng từ vựng đa dạng, có idiom/collocation", "Cấu trúc câu đa dạng, ít lỗi ngữ pháp cơ bản"] }
+      ]],
+      ["3. Reading", [
+        { title: "Kỹ năng đọc hiểu & Suy luận", items: ["Skimming nắm ý chính, Scanning tìm thông tin nhanh", "Phân biệt T/F/NG chính xác, hiểu hàm ý tác giả"] }
+      ]],
+      ["4. Writing", [
+        { title: "Task Response & Coherence", items: ["Trả lời đúng trọng tâm đề bài, đủ các vế câu hỏi", "Cấu trúc đoạn mạch lạc, dùng từ nối logic"] },
+        { title: "Grammar & Vocabulary", items: ["Sử dụng cấu trúc phức hợp chính xác", "Từ vựng trang trọng, chuẩn xác theo ngữ cảnh"] }
+      ]]
+    ]
+  },
+  communication: {
+    min: 1, max: 10, step: 0.5, type: 'general',
+    legend: "Đánh giá Khóa Giao tiếp. Thang điểm từ 1 đến 10. Điểm chú trọng vào phản xạ, phát âm và khả năng tương tác trực tiếp.",
+    sections: [
+      ["1. Phát âm & Ngữ điệu (Pronunciation)", [
+        { title: "Phát âm cơ bản & Nâng cao", items: ["Phát âm rõ nguyên âm, phụ âm, âm cuối (Ending sounds)", "Nhấn đúng trọng âm từ, nối âm tự nhiên"] }
+      ]],
+      ["2. Phản xạ & Trôi chảy (Fluency)", [
+        { title: "Tốc độ & Tương tác", items: ["Trả lời không dịch nhẩm tiếng Việt, phản xạ nhanh", "Duy trì mạch hội thoại, biết đặt câu hỏi ngược lại"] }
+      ]],
+      ["3. Nghe hiểu (Listening Response)", [
+        { title: "Nắm bắt thông tin hội thoại", items: ["Hiểu chính xác câu hỏi của giáo viên ngay lần đầu", "Phân biệt được thái độ, ngữ điệu người nói"] }
+      ]],
+      ["4. Từ vựng & Ngữ pháp (Vocab & Grammar)", [
+        { title: "Sử dụng ngôn ngữ", items: ["Dùng câu hoàn chỉnh, tránh trả lời cụt lủn", "Vốn từ vựng đời sống phong phú, dùng đúng ngữ cảnh"] }
+      ]]
+    ]
+  },
+  yle: {
+    min: 1, max: 10, step: 1, type: 'general',
+    legend: "Đánh giá Trẻ em (Movers/Flyers). Thang điểm từ 1 đến 10 (có thể quy đổi tương đương khiên Cambridge). Đánh giá sự tự tin và từ vựng cơ bản.",
+    sections: [
+      ["1. Listening (Nghe hiểu)", [
+        { title: "Bắt thông tin cơ bản", items: ["Nghe và tô màu, vẽ đúng vị trí yêu cầu", "Nghe hiểu đánh vần tên riêng, chữ số, từ vựng quen thuộc"] }
+      ]],
+      ["2. Reading & Writing (Đọc & Viết)", [
+        { title: "Đọc hiểu & Ngữ pháp cơ bản", items: ["Hiểu các câu miêu tả ngắn, định nghĩa đơn giản", "Điền đúng từ vựng vào chỗ trống, viết câu miêu tả tranh"] }
+      ]],
+      ["3. Speaking (Nói & Tương tác)", [
+        { title: "Mô tả & Giao tiếp", items: ["Tự tin giới thiệu bản thân, trả lời câu hỏi cá nhân", "Tìm điểm khác biệt giữa 2 bức tranh, kể chuyện theo tranh", "Phát âm rõ ràng, dễ nghe"] }
+      ]]
+    ]
+  },
+  grammar: {
+    min: 1, max: 10, step: 0.5, type: 'general',
+    legend: "Đánh giá Nền tảng Ngữ pháp cơ bản. Thang điểm từ 1 đến 10. Chú trọng độ chính xác khi làm bài tập và đặt câu.",
+    sections: [
+      ["1. Các thì cơ bản (Tenses)", [
+        { title: "Chia động từ", items: ["Sử dụng đúng các thì Hiện tại (Đơn, Tiếp diễn, Hoàn thành)", "Sử dụng đúng các thì Quá khứ & Tương lai"] }
+      ]],
+      ["2. Từ loại (Parts of Speech)", [
+        { title: "Nhận diện & Sử dụng", items: ["Nắm vững vị trí của Danh, Động, Tính, Trạng từ", "Sử dụng đúng Mạo từ (a, an, the) và Giới từ chỉ TG/Nơi chốn"] }
+      ]],
+      ["3. Cấu trúc câu (Sentence Structures)", [
+        { title: "Xây dựng câu", items: ["Viết đúng cấu trúc câu khẳng định, phủ định, nghi vấn", "Biết dùng câu điều kiện (Type 1, 2) và Mệnh đề quan hệ cơ bản"] }
+      ]],
+      ["4. Khả năng sửa lỗi (Error Correction)", [
+        { title: "Độ chính xác", items: ["Nhận diện được lỗi sai ngữ pháp trong câu", "Áp dụng ngữ pháp vào văn cảnh thực tế không bị rập khuôn"] }
+      ]]
+    ]
+  }
+};
+
+const tbody = document.querySelector("#tbl tbody");
+const testTypeSelector = document.getElementById("test-type");
+
+function renderTable() {
+  const selectedType = testTypeSelector.value;
+  const data = TEST_DATA[selectedType];
+  
+  // Cập nhật giao diện phụ
+  document.getElementById("legend-text").innerHTML = `<b>Hướng dẫn:</b> ${data.legend}`;
+  document.getElementById("score-header").textContent = `Điểm (${data.min}-${data.max})`;
+  document.getElementById("overall-lbl").textContent = data.type === 'ielts' ? "IELTS Overall Band" : "Điểm tổng kết (1-10)";
+  
+  tbody.innerHTML = ""; // Xóa bảng cũ
+
+  // Render bảng mới
+  data.sections.forEach((sec, si) => {
+    const [title, subCategories] = sec;
+    const trSec = document.createElement("tr");
+    trSec.className = "sec";
+    trSec.innerHTML = `<td colspan="4">${title}</td>`;
+    tbody.appendChild(trSec);
+
+    let totalRows = 0;
+    subCategories.forEach(sub => { totalRows += 1 + sub.items.length; });
+
+    let isFirstRowInSection = true;
+    subCategories.forEach(sub => {
+      const trSub = document.createElement("tr");
+      trSub.className = "sub-heading-row";
+      
+      let rightCols = "";
+      if (isFirstRowInSection) {
+        rightCols = `
+          <td class="savg" rowspan="${totalRows}" id="avg${si}">—</td>
+          <td rowspan="${totalRows}">
+            <textarea class="cm" placeholder="Ghi chú chi tiết / Điểm mạnh / Lỗi sai..."></textarea>
+          </td>
+        `;
+        isFirstRowInSection = false;
+      }
+
+      trSub.innerHTML = `<td class="sub-title">${sub.title}</td><td class="score-empty"></td>${rightCols}`;
+      tbody.appendChild(trSub);
+
+      sub.items.forEach(itemText => {
+        const trItem = document.createElement("tr");
+        trItem.innerHTML = `
+          <td class="crit">• ${itemText}</td>
+          <td class="score">
+            <input class="sc" data-sec="${si}" type="number" min="${data.min}" max="${data.max}" step="${data.step}" inputmode="decimal">
+          </td>
+        `;
+        tbody.appendChild(trItem);
+      });
+    });
+  });
+  calc();
+}
+
+// Luật làm tròn IELTS
+function calculateIeltsRounding(score) {
+  let whole = Math.floor(score);
+  let fraction = score - whole;
+  if (fraction >= 0.75) return whole + 1.0;
+  if (fraction >= 0.25) return whole + 0.5;
+  return whole + 0.0;
+}
+
+function calc() {
+  const selectedType = testTypeSelector.value;
+  const isIelts = TEST_DATA[selectedType].type === 'ielts';
+  let sumSectionScores = 0;
+  let activeSections = 0;
+
+  TEST_DATA[selectedType].sections.forEach((_, si) => {
+    const inputs = [...document.querySelectorAll(`.sc[data-sec="${si}"]`)];
+    const vals = inputs.map(i => parseFloat(i.value)).filter(v => !isNaN(v));
+    const avgEl = document.getElementById("avg" + si);
+
+    if (vals.length > 0) {
+      let avg = vals.reduce((a, b) => a + b, 0) / vals.length;
+      if (isIelts) avg = calculateIeltsRounding(avg);
+      avgEl.textContent = avg.toFixed(1);
+      sumSectionScores += avg;
+      activeSections++;
+    } else {
+      avgEl.textContent = "—";
+    }
+  });
+
+  const rawAvgEl = document.getElementById("avg-raw");
+  const overallResultEl = document.getElementById("overall-result");
+
+  if (activeSections > 0) {
+    let rawAvg = sumSectionScores / activeSections;
+    rawAvgEl.textContent = rawAvg.toFixed(2);
+    
+    let finalResult = isIelts ? calculateIeltsRounding(rawAvg) : rawAvg;
+    overallResultEl.textContent = finalResult.toFixed(1);
+    
+  } else {
+    rawAvgEl.textContent = "0.00";
+    overallResultEl.textContent = "0.0";
+  }
+}
+
+function clearForm() {
+  if(confirm('Xóa toàn bộ điểm và nhận xét?')){
+    document.querySelectorAll('.sc').forEach(i => i.value = '');
+    document.querySelectorAll('.cm').forEach(t => t.value = '');
+    calc();
+  }
+}
+
+// Lắng nghe sự kiện
+testTypeSelector.addEventListener("change", renderTable);
+document.addEventListener("input", e => { if (e.target.classList.contains("sc")) calc(); });
+
+// Khởi chạy mặc định
+renderTable();
+</script>
+</body>
+</html>
