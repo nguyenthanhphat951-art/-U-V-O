@@ -204,7 +204,7 @@ const TEST_DATA = {
   },
   kids: {
     min: 1, max: 5, step: 0.5,
-    legend: "<b>BÍ KÍP DỰ GIỜ:</b> Dùng các từ viết tắt <b>[MOVE], [PLAY], [READ], [STEP], [CARE], [SMART]</b> để ghi chú nhanh vào ô Nhận xét.",
+    legend: "<b>BÍ KÍP DỰ GIỜ:</b> Dùng các từ viết tắt <b>[MOVE], [PLAY], [CORE], [READ], [STEP], [CARE], [SMART]</b> để ghi chú nhanh vào ô Nhận xét.",
     sections: [
       ["[MOVE] 1. TPR & Management", [
         { title: "M & O (Rules)", items: ["<b>M</b>odel & ICQ: Làm mẫu và dùng ICQ siêu đơn giản cho mọi trò chơi", "<b>O</b>rganize Behavior: Quản lý kỷ luật công bằng bằng điểm thưởng (Stickers, Stars)"] },
@@ -214,19 +214,23 @@ const TEST_DATA = {
         { title: "P & L (Present)", items: ["<b>P</b>resent Visually: Khai thác từ vựng qua đa dạng học liệu (Flashcards, hình ảnh, bài hát, vật thật...)", "<b>L</b>oud & Quiet: Luyện âm đa dạng, sôi nổi (Đồng thanh, cá nhân, to/nhỏ, chant)"] },
         { title: "A & Y (Practice)", items: ["<b>A</b>im for Language: Trò chơi bắt buộc trẻ PHẢI NÓI + VIẾT, không chỉ chơi cho vui", "<b>Y</b>ield STT: Tương tác liên tục để tối đa hóa thời gian phát biểu của trẻ"] }
       ]],
-      ["[READ] 3. Receptive Skills (Nghe/Đọc)", [
+      ["[CORE] 3. Teaching Vocab & Grammar", [
+        { title: "C & O (Meaning)", items: ["<b>C</b>ontextual Eliciting: Khơi gợi ngôn ngữ từ ngữ cảnh, không dịch", "<b>O</b>bligatory CCQs: Bắt buộc dùng CCQ thay vì hỏi 'Do you understand?'"] },
+        { title: "R & E (Practice)", items: ["<b>R</b>ules of MPF: Tuân thủ trình tự Meaning -> Pronunciation -> Form", "<b>E</b>xecute Practice: Tổ chức luyện tập có kiểm soát (Controlled) và tự do (Free)"] }
+      ]],
+      ["[READ] 4. Receptive Skills (Nghe/Đọc)", [
         { title: "R & E (Pre/While)", items: ["<b>R</b>eady the Learners: Dạy từ khóa trước khi nghe/đọc truyện hoặc bài hát", "<b>E</b>xecute Task: Giao nhiệm vụ Nghe/Đọc rõ ràng, vừa sức với độ tuổi"] },
         { title: "A & D (Post/Check)", items: ["<b>A</b>ssess Visually: Kiểm tra độ hiểu bài bằng hình ảnh, hành động hoặc phân vai", "<b>D</b>iscuss Further: Khơi gợi trẻ liên hệ nội dung bài với bản thân"] }
       ]],
-      ["[STEP] 4. Productive Skills (Nói/Viết)", [
+      ["[STEP] 5. Productive Skills (Nói/Viết)", [
         { title: "S & T (Support)", items: ["<b>S</b>caffolding: Hỗ trợ từng bước (cầm tay chỉ việc) khi trẻ tập viết/vẽ", "<b>T</b>alk in Sentences: Luôn khuyến khích và uốn nắn trẻ trả lời nguyên câu"] },
         { title: "E & P (Output)", items: ["<b>E</b>ncourage Output: Khuyến khích trẻ tự tin trình bày ý tưởng cá nhân", "<b>P</b>honics & Sounds: Chú ý sửa âm cuối (Ending sounds) và quy tắc đánh vần"] }
       ]],
-      ["[CARE] 5. Correction & Rapport", [
+      ["[CARE] 6. Correction & Rapport", [
         { title: "C & A (Correction)", items: ["<b>C</b>orrection: Sửa lỗi khéo léo, nhẹ nhàng, không làm trẻ sợ", "<b>A</b>ffection: Thể hiện sự quan tâm, công bằng với tất cả các bé"] },
         { title: "R & E (Engagement)", items: ["<b>R</b>apport: Tương tác thân thiện, gần gũi với học sinh", "<b>E</b>ngagement: Giữ trẻ tập trung và hào hứng suốt buổi học"] }
       ]],
-      ["[SMART] 6. Competencies & Cambridge", [
+      ["[SMART] 7. Competencies & Cambridge", [
         { title: "S & M (Plan & Language)", items: ["<b>S</b>tructured Planning: (Lesson Planning) Bài giảng có mục tiêu (Aims) và các bước (Procedures) rõ ràng", "<b>M</b>indful Language: (Language Awareness) GV sử dụng ngôn ngữ chuẩn xác, phù hợp với trình độ học viên"] },
         { title: "A & R (Class Management)", items: ["<b>A</b>ctivity Dynamics: Luân phiên tĩnh/động hợp lý (Stirrers & Settlers), CÓ REFLECT sau khi chơi", "<b>R</b>oom Management: (Classroom Management) Bao quát lớp, xử lý tình huống khéo léo, an toàn"] },
         { title: "T (Exam Focus)", items: ["<b>T</b>arget Cambridge: Trò chơi, bài tập bám sát cấu trúc đề thi Cambridge YLE (Starters/Movers/Flyers)"] }
