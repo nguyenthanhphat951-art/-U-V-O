@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Form Đánh Giá Năng Lực Học Viên Đa Năng</title>
+<title>Comprehensive Observation Form - Final</title>
 <style>
   :root { 
     --navy: #1F3864; --light: #D6E4F0; --grey: #f4f6f9; 
@@ -11,7 +11,7 @@
   }
   * { box-sizing: border-box; }
   body { font-family: Arial, Helvetica, sans-serif; margin: 0; background: var(--grey); color: #222; font-size: 13.5px; line-height: 1.4; }
-  .wrap { max-width: 1100px; margin: 0 auto; padding: 16px; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 16px; }
   header { background: var(--navy); color: #fff; padding: 20px 24px; border-radius: 8px 8px 0 0; }
   header h1 { margin: 0; font-size: 22px; text-transform: uppercase; }
   header p { margin: 6px 0 0; font-size: 13px; opacity: .9; }
@@ -21,7 +21,22 @@
   .info input, .info select { width: 100%; padding: 8px 10px; border: 1px solid #bbb; border-radius: 4px; font-size: 13px; }
   .info select { background: #fffde6; border-color: var(--navy); font-weight: bold; color: var(--navy); }
   .info input:focus, .info select:focus { outline: 2px solid var(--navy); }
+  
   .legend { font-size: 12.5px; background: #fffbe6; border: 1px solid #f0e2a0; padding: 12px 14px; border-radius: 6px; margin: 16px 0; color: #444; }
+  
+  .scoring-guide { background: #fff; border: 1px solid #dde3ec; border-radius: 6px; margin-bottom: 16px; overflow: hidden; }
+  .sg-header { background: var(--navy); color: #fff; padding: 10px 14px; font-size: 13px; font-weight: bold; text-transform: uppercase; }
+  .sg-content { display: flex; flex-wrap: wrap; }
+  .sg-item { flex: 1; min-width: 19%; padding: 12px; border-right: 1px solid #dde3ec; font-size: 12px; }
+  .sg-item:last-child { border-right: none; }
+  .sg-item.k { background: #ffebee; }
+  .sg-item.y { background: #fff3e0; }
+  .sg-item.d { background: #e8f5e9; }
+  .sg-item.t { background: #e3f2fd; }
+  .sg-item.x { background: #f3e5f5; }
+  .sg-score { font-size: 15px; font-weight: bold; color: var(--navy); margin-bottom: 6px; display: block; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 4px;}
+  .sg-desc { color: #444; line-height: 1.4; }
+
   table { width: 100%; border-collapse: collapse; margin-top: 10px; }
   th, td { border: 1px solid #ccd4e0; padding: 8px 10px; vertical-align: middle; text-align: left; }
   th { background: var(--navy); color: #fff; font-size: 13px; text-transform: uppercase; }
@@ -33,7 +48,15 @@
   td.savg { width: 90px; text-align: center; font-weight: bold; background: #fafcff; font-size: 16px; color: var(--navy); }
   input.sc { width: 60px; padding: 6px; text-align: center; border: 2px solid #e6c200; background: #fffde6; border-radius: 4px; font-size: 14px; font-weight: bold; }
   input.sc:focus { outline: 2px solid var(--navy); background: #fff; }
-  textarea.cm { width: 100%; height: 100%; min-height: 70px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; padding: 8px; font-family: inherit; resize: vertical; display: block; }
+  
+  .feedback-box { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+  .feedback-box:last-child { margin-bottom: 0; }
+  .fb-label { font-size: 12px; font-weight: bold; }
+  .fb-strong { color: var(--ok); }
+  .fb-weak { color: var(--warn); }
+  textarea.cm { width: 100%; min-height: 60px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; padding: 8px; font-family: inherit; resize: vertical; display: block; }
+  textarea.cm:focus { outline: 1px solid var(--navy); border-color: var(--navy); }
+
   .totals { display: flex; gap: 16px; margin-top: 20px; flex-wrap: wrap; }
   .tot-box { flex: 1; min-width: 230px; background: var(--light); border-radius: 8px; padding: 16px 20px; }
   .tot-box .num { font-size: 32px; font-weight: bold; color: var(--navy); margin-top: 5px; }
@@ -53,147 +76,160 @@
     .wrap { padding: 0; width: 100%; max-width: 100%; }
     .card { border: none; padding: 0; }
     textarea.cm, input, select { border: 1px solid #999; }
+    .sg-item { border: 1px solid #ccc !important; }
   }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1>Phiếu Đánh Giá Năng Lực Học Viên (Multi-Program)</h1>
-    <p>Placement Test & Diagnostic Assessment Form</p>
+    <h1>Foreign Teacher Observation Form</h1>
+    <p>Phiếu Đánh Giá Dự Giờ (Tích hợp Phương pháp Acronyms: SMART, TALK, CARE...)</p>
   </header>
 
   <div class="card">
     <div class="info">
       <div>
-        <label>Chương trình đánh giá (Test Type)</label>
+        <label>Class Program (Chương trình)</label>
         <select id="test-type">
-          <option value="ielts">IELTS (Band 0-9.0)</option>
-          <option value="communication">Giao tiếp / Communication (1-10)</option>
-          <option value="yle">Kids: Movers / Flyers (1-10)</option>
-          <option value="grammar">Basic Grammar (1-10)</option>
+          <option value="adults">Adults / IELTS / Gen. English</option>
+          <option value="kids">Kids / Teens / YLE</option>
         </select>
       </div>
-      <div><label>Họ và tên học viên</label><input placeholder="Nguyễn Văn A"></div>
-      <div><label>Mã học viên / Số điện thoại</label><input placeholder="0909xxxxxx"></div>
+      <div><label>Teacher's Name (Tên Giáo viên)</label><input placeholder="Mr. / Ms. ..."></div>
+      <div><label>Class & Level (Lớp & Trình độ)</label><input placeholder="e.g., KET, IELTS 5.0, Starter..."></div>
       
-      <div><label>Ngày kiểm tra</label><input type="date"></div>
-      <div><label>Giám khảo / Giáo viên</label><input placeholder="Thầy/Cô..."></div>
-      <div><label>Người tư vấn (Consultant)</label><input placeholder="Nhập tên nhân viên tư vấn..."></div>
+      <div><label>Date (Ngày dự giờ)</label><input type="date"></div>
+      <div><label>Lesson Focus (Trọng tâm bài)</label><input placeholder="e.g., Reading & Vocabulary"></div>
+      <div><label>Observer (Người dự giờ)</label><input placeholder="Academic Coordinator..."></div>
     </div>
 
-    <div class="legend" id="legend-text">
-      <!-- Cập nhật tự động qua JS -->
+    <div class="legend" id="legend-text"></div>
+
+    <div class="scoring-guide">
+      <div class="sg-header">Scoring Guide (Hệ quy chiếu Điểm số 1-5)</div>
+      <div class="sg-content">
+        <div class="sg-item k">
+          <span class="sg-score">1 - Poor</span>
+          <span class="sg-desc">Severe issues. Heavy TTT, lacks ICQ/CCQ entirely, poor instructions. (Lỗi nghiệp vụ nặng).</span>
+        </div>
+        <div class="sg-item y">
+          <span class="sg-score">2 - Below Standard</span>
+          <span class="sg-desc">Inconsistent. Attempts techniques but poorly executed. (Có áp dụng nhưng lúng túng, sai phương pháp).</span>
+        </div>
+        <div class="sg-item d">
+          <span class="sg-score">3 - Pass / Standard</span>
+          <span class="sg-desc">Competent. Safe lesson, meets center's basic expectations. (Đạt chuẩn, bài giảng an toàn).</span>
+        </div>
+        <div class="sg-item t">
+          <span class="sg-score">4 - Merit / Good</span>
+          <span class="sg-desc">Strong skills. High STT, proper task staging, clear ICQs/CCQs. (Kỹ năng tốt, triển khai bài logic).</span>
+        </div>
+        <div class="sg-item x">
+          <span class="sg-score">5 - Distinction</span>
+          <span class="sg-desc">Outstanding. Perfect balance of TTT/STT, highly engaging, fully student-centered. (Xuất sắc, truyền cảm hứng).</span>
+        </div>
+      </div>
     </div>
 
     <table id="tbl">
       <thead>
         <tr>
-          <th style="width: 45%">Tiêu chí đánh giá chi tiết</th>
-          <th style="width: 10%; text-align: center;" id="score-header">Điểm</th>
-          <th style="width: 10%; text-align: center;">Trung Bình</th>
-          <th style="width: 35%">Nhận xét chi tiết & Bằng chứng</th>
+          <th style="width: 45%">Evaluation Criteria (Tiêu chí đánh giá chuyên môn)</th>
+          <th style="width: 10%; text-align: center;" id="score-header">Score</th>
+          <th style="width: 10%; text-align: center;">Average</th>
+          <th style="width: 35%">Observer's Comments (Bằng chứng cụ thể)</th>
         </tr>
       </thead>
       <tbody>
-        <!-- Cập nhật tự động qua JS -->
+        <!-- JS render -->
       </tbody>
     </table>
 
     <div class="totals">
       <div class="tot-box">
-        <div class="lbl">Điểm trung bình (Raw Score)</div>
+        <div class="lbl">Raw Score (Điểm trung bình)</div>
         <div class="num"><span id="avg-raw">0.00</span></div>
       </div>
       <div class="tot-box">
-        <div class="lbl" id="overall-lbl">Kết quả tổng quát</div>
-        <div id="overall-result">0.0</div>
+        <div class="lbl" id="overall-lbl">Final Grade (Xếp loại)</div>
+        <div id="overall-result">Pending</div>
       </div>
     </div>
 
     <div class="recommendation">
-      <h3>Kết luận & Lộ trình học tập (Dành cho Người tư vấn & Giáo viên)</h3>
-      <textarea placeholder="- Khóa học đề xuất: ...&#10;- Lộ trình dự kiến: ...&#10;- Điểm mạnh / Điểm cần khắc phục: ..."></textarea>
+      <h3>Action Plan & Feedback Summary (Kế hoạch Cải thiện)</h3>
+      <textarea placeholder="- Overall Summary (Đánh giá chung): ...&#10;- Suggestions for next lesson (Gợi ý bài sau): ..."></textarea>
     </div>
 
     <div class="btns">
-      <button onclick="window.print()">🖨 In / Lưu PDF</button>
-      <button class="alt" onclick="clearForm()">Xóa form (Reset)</button>
+      <button onclick="window.print()">🖨 Print / Save PDF</button>
+      <button class="alt" onclick="clearForm()">Reset Form (Xóa trắng)</button>
     </div>
   </div>
 </div>
 
 <script>
-// --- DATABASE TIÊU CHÍ CHO TỪNG CHƯƠNG TRÌNH ---
 const TEST_DATA = {
-  ielts: {
-    min: 0, max: 9, step: 0.5, type: 'ielts',
-    legend: "Chấm điểm theo IELTS Band (0-9). Điểm trung bình và Overall Band được làm tròn theo luật IELTS (làm tròn lên 0.5 hoặc 1.0 gần nhất).",
+  adults: {
+    min: 1, max: 5, step: 0.5,
+    legend: "<b>BÍ KÍP DỰ GIỜ:</b> Dùng các từ viết tắt <b>[TALK], [CORE], [READ], [IDEA], [CARE], [SMART]</b> để ghi chú nhanh vào ô Nhận xét.",
     sections: [
-      ["1. Listening", [
-        { title: "Khả năng nghe & Kỹ năng làm bài", items: ["Nghe hiểu ý chính và chi tiết (Gist & Specific Details)", "Bắt Keyword tốt, không bị lạc nhịp (Lost track)", "Hiểu các diễn đạt thay thế (Paraphrasing)"] }
+      ["[TALK] 1. Language & Instructions", [
+        { title: "T & A (Language)", items: ["<b>T</b>argeted Language: Sử dụng ngôn ngữ phù hợp trình độ (Graded language)", "<b>A</b>ctive STT: Tối đa thời gian học viên nói, giảm thiểu TTT"] },
+        { title: "L & K (Instructions)", items: ["<b>L</b>ead by Example: Luôn làm mẫu (Modeling) trước khi bắt đầu", "<b>K</b>nowledge Check: Dùng ICQ để kiểm tra học viên hiểu lệnh"] }
       ]],
-      ["2. Speaking", [
-        { title: "Fluency & Pronunciation", items: ["Tốc độ nói tự nhiên, tự sửa lỗi ở mức tối thiểu", "Phát âm rõ ràng, có ngữ điệu và trọng âm chuẩn"] },
-        { title: "Lexical & Grammar", items: ["Dùng từ vựng đa dạng, có idiom/collocation", "Cấu trúc câu đa dạng, ít lỗi ngữ pháp cơ bản"] }
+      ["[CORE] 2. Teaching Vocab & Grammar", [
+        { title: "C & O (Meaning)", items: ["<b>C</b>ontextual Eliciting: Khơi gợi ngôn ngữ từ ngữ cảnh, không dịch", "<b>O</b>bligatory CCQs: Bắt buộc dùng CCQ thay vì hỏi 'Do you understand?'"] },
+        { title: "R & E (Practice)", items: ["<b>R</b>ules of MPF: Tuân thủ trình tự Meaning -> Pronunciation -> Form", "<b>E</b>xecute Practice: Tổ chức luyện tập có kiểm soát (Controlled) và tự do (Free)"] }
       ]],
-      ["3. Reading", [
-        { title: "Kỹ năng đọc hiểu & Suy luận", items: ["Skimming nắm ý chính, Scanning tìm thông tin nhanh", "Phân biệt T/F/NG chính xác, hiểu hàm ý tác giả"] }
+      ["[READ] 3. Receptive Skills (Nghe/Đọc)", [
+        { title: "R & E (Pre/While)", items: ["<b>R</b>eady the Learners: Dạy từ khóa (Block vocab) & Khơi gợi dự đoán (Prediction)", "<b>E</b>xecute Limits: Giao task rõ ràng (Gist/Detail) và ép thời gian nghiêm ngặt"] },
+        { title: "A & D (Post)", items: ["<b>A</b>ssess Logically: Chữa bài logic, yêu cầu tìm dẫn chứng (Where is the proof?)", "<b>D</b>iscuss Further: Có hoạt động Nói liên hệ thực tế (Follow-up speaking)"] }
       ]],
-      ["4. Writing", [
-        { title: "Task Response & Coherence", items: ["Trả lời đúng trọng tâm đề bài, đủ các vế câu hỏi", "Cấu trúc đoạn mạch lạc, dùng từ nối logic"] },
-        { title: "Grammar & Vocabulary", items: ["Sử dụng cấu trúc phức hợp chính xác", "Từ vựng trang trọng, chuẩn xác theo ngữ cảnh"] }
+      ["[IDEA] 4. Productive Skills (Nói/Viết)", [
+        { title: "I & D (Pre/While)", items: ["<b>I</b>nput & Brainstorm: Cung cấp ý tưởng và cấu trúc nền/bài mẫu (Model Texts)", "<b>D</b>riven Purpose: Bài tập Nói/Viết có mục đích giao tiếp thực tế rõ ràng"] },
+        { title: "E & A (Practice & Post)", items: ["<b>E</b>ncourage Freer Practice: Khuyến khích và tổ chức hiệu quả hoạt động thực hành tự do", "<b>A</b>nalyze Content: Phân tích, đánh giá và phản hồi nội dung bài Nói/Viết rõ ràng"] }
+      ]],
+      ["[CARE] 5. Correction & Rapport", [
+        { title: "C & A (Correction)", items: ["<b>C</b>orrection Timing: Sửa lỗi tức thì (Accuracy) hoặc trì hoãn (Fluency) đúng lúc", "<b>A</b>utonomy: Khuyến khích học viên tự sửa lỗi (Self) hoặc nhờ bạn (Peer)"] },
+        { title: "R & E (Engagement)", items: ["<b>R</b>apport: Tương tác thân thiện, tạo sự gắn kết tốt với học viên", "<b>E</b>ngagement: Truyền cảm hứng, duy trì sự hứng thú xuyên suốt bài"] }
+      ]],
+      ["[SMART] 6. Competencies & Cambridge", [
+        { title: "S & M (Plan & Language)", items: ["<b>S</b>tructured Planning: (Lesson Planning) Bài giảng có mục tiêu (Aims) và các bước (Procedures) rõ ràng, logic", "<b>M</b>indful Language: (Language Awareness) GV sử dụng ngôn ngữ chuẩn xác, phù hợp với trình độ học viên"] },
+        { title: "A & R (Class Management)", items: ["<b>A</b>ctivity Dynamics: Luân phiên hoạt động tĩnh/động hợp lý, CÓ REFLECT (tổng kết) sau khi chơi", "<b>R</b>oom Management: (Classroom Management) Bao quát lớp, phân bổ thời gian và chia nhóm/cặp hiệu quả"] },
+        { title: "T (Exam Focus)", items: ["<b>T</b>arget Cambridge: Trò chơi, handouts và hoạt động bám sát định dạng đề thi Cambridge"] }
       ]]
     ]
   },
-  communication: {
-    min: 1, max: 10, step: 0.5, type: 'general',
-    legend: "Đánh giá Khóa Giao tiếp. Thang điểm từ 1 đến 10. Điểm chú trọng vào phản xạ, phát âm và khả năng tương tác trực tiếp.",
+  kids: {
+    min: 1, max: 5, step: 0.5,
+    legend: "<b>BÍ KÍP DỰ GIỜ:</b> Dùng các từ viết tắt <b>[MOVE], [PLAY], [READ], [STEP], [CARE], [SMART]</b> để ghi chú nhanh vào ô Nhận xét.",
     sections: [
-      ["1. Phát âm & Ngữ điệu (Pronunciation)", [
-        { title: "Phát âm cơ bản & Nâng cao", items: ["Phát âm rõ nguyên âm, phụ âm, âm cuối (Ending sounds)", "Nhấn đúng trọng âm từ, nối âm tự nhiên"] }
+      ["[MOVE] 1. TPR & Management", [
+        { title: "M & O (Rules)", items: ["<b>M</b>odel & ICQ: Làm mẫu và dùng ICQ siêu đơn giản cho mọi trò chơi", "<b>O</b>rganize Behavior: Quản lý kỷ luật công bằng bằng điểm thưởng (Stickers, Stars)"] },
+        { title: "V & E (Energy)", items: ["<b>V</b>ibe & Energy: Năng lượng bùng nổ, nhịp độ nhanh, không có thời gian chết (Luân phiên TĨNH - ĐỘNG)", "<b>E</b>xpressive TPR: Sử dụng ngôn ngữ cơ thể, nét mặt sinh động, tự nhiên để truyền đạt ý nghĩa"] }
       ]],
-      ["2. Phản xạ & Trôi chảy (Fluency)", [
-        { title: "Tốc độ & Tương tác", items: ["Trả lời không dịch nhẩm tiếng Việt, phản xạ nhanh", "Duy trì mạch hội thoại, biết đặt câu hỏi ngược lại"] }
+      ["[PLAY] 2. Vocab & Games", [
+        { title: "P & L (Present)", items: ["<b>P</b>resent Visually: Khai thác từ vựng qua đa dạng học liệu (Flashcards, hình ảnh, bài hát, vật thật...)", "<b>L</b>oud & Quiet: Luyện âm đa dạng, sôi nổi (Đồng thanh, cá nhân, to/nhỏ, chant)"] },
+        { title: "A & Y (Practice)", items: ["<b>A</b>im for Language: Trò chơi bắt buộc trẻ PHẢI NÓI + VIẾT, không chỉ chơi cho vui", "<b>Y</b>ield STT: Tương tác liên tục để tối đa hóa thời gian phát biểu của trẻ"] }
       ]],
-      ["3. Nghe hiểu (Listening Response)", [
-        { title: "Nắm bắt thông tin hội thoại", items: ["Hiểu chính xác câu hỏi của giáo viên ngay lần đầu", "Phân biệt được thái độ, ngữ điệu người nói"] }
+      ["[READ] 3. Receptive Skills (Nghe/Đọc)", [
+        { title: "R & E (Pre/While)", items: ["<b>R</b>eady the Learners: Dạy từ khóa trước khi nghe/đọc truyện hoặc bài hát", "<b>E</b>xecute Task: Giao nhiệm vụ Nghe/Đọc rõ ràng, vừa sức với độ tuổi"] },
+        { title: "A & D (Post/Check)", items: ["<b>A</b>ssess Visually: Kiểm tra độ hiểu bài bằng hình ảnh, hành động hoặc phân vai", "<b>D</b>iscuss Further: Khơi gợi trẻ liên hệ nội dung bài với bản thân"] }
       ]],
-      ["4. Từ vựng & Ngữ pháp (Vocab & Grammar)", [
-        { title: "Sử dụng ngôn ngữ", items: ["Dùng câu hoàn chỉnh, tránh trả lời cụt lủn", "Vốn từ vựng đời sống phong phú, dùng đúng ngữ cảnh"] }
-      ]]
-    ]
-  },
-  yle: {
-    min: 1, max: 10, step: 1, type: 'general',
-    legend: "Đánh giá Trẻ em (Movers/Flyers). Thang điểm từ 1 đến 10 (có thể quy đổi tương đương khiên Cambridge). Đánh giá sự tự tin và từ vựng cơ bản.",
-    sections: [
-      ["1. Listening (Nghe hiểu)", [
-        { title: "Bắt thông tin cơ bản", items: ["Nghe và tô màu, vẽ đúng vị trí yêu cầu", "Nghe hiểu đánh vần tên riêng, chữ số, từ vựng quen thuộc"] }
+      ["[STEP] 4. Productive Skills (Nói/Viết)", [
+        { title: "S & T (Support)", items: ["<b>S</b>caffolding: Hỗ trợ từng bước (cầm tay chỉ việc) khi trẻ tập viết/vẽ", "<b>T</b>alk in Sentences: Luôn khuyến khích và uốn nắn trẻ trả lời nguyên câu"] },
+        { title: "E & P (Output)", items: ["<b>E</b>ncourage Output: Khuyến khích trẻ tự tin trình bày ý tưởng cá nhân", "<b>P</b>honics & Sounds: Chú ý sửa âm cuối (Ending sounds) và quy tắc đánh vần"] }
       ]],
-      ["2. Reading & Writing (Đọc & Viết)", [
-        { title: "Đọc hiểu & Ngữ pháp cơ bản", items: ["Hiểu các câu miêu tả ngắn, định nghĩa đơn giản", "Điền đúng từ vựng vào chỗ trống, viết câu miêu tả tranh"] }
+      ["[CARE] 5. Correction & Rapport", [
+        { title: "C & A (Correction)", items: ["<b>C</b>orrection: Sửa lỗi khéo léo, nhẹ nhàng, không làm trẻ sợ", "<b>A</b>ffection: Thể hiện sự quan tâm, công bằng với tất cả các bé"] },
+        { title: "R & E (Engagement)", items: ["<b>R</b>apport: Tương tác thân thiện, gần gũi với học sinh", "<b>E</b>ngagement: Giữ trẻ tập trung và hào hứng suốt buổi học"] }
       ]],
-      ["3. Speaking (Nói & Tương tác)", [
-        { title: "Mô tả & Giao tiếp", items: ["Tự tin giới thiệu bản thân, trả lời câu hỏi cá nhân", "Tìm điểm khác biệt giữa 2 bức tranh, kể chuyện theo tranh", "Phát âm rõ ràng, dễ nghe"] }
-      ]]
-    ]
-  },
-  grammar: {
-    min: 1, max: 10, step: 0.5, type: 'general',
-    legend: "Đánh giá Nền tảng Ngữ pháp cơ bản. Thang điểm từ 1 đến 10. Chú trọng độ chính xác khi làm bài tập và đặt câu.",
-    sections: [
-      ["1. Các thì cơ bản (Tenses)", [
-        { title: "Chia động từ", items: ["Sử dụng đúng các thì Hiện tại (Đơn, Tiếp diễn, Hoàn thành)", "Sử dụng đúng các thì Quá khứ & Tương lai"] }
-      ]],
-      ["2. Từ loại (Parts of Speech)", [
-        { title: "Nhận diện & Sử dụng", items: ["Nắm vững vị trí của Danh, Động, Tính, Trạng từ", "Sử dụng đúng Mạo từ (a, an, the) và Giới từ chỉ TG/Nơi chốn"] }
-      ]],
-      ["3. Cấu trúc câu (Sentence Structures)", [
-        { title: "Xây dựng câu", items: ["Viết đúng cấu trúc câu khẳng định, phủ định, nghi vấn", "Biết dùng câu điều kiện (Type 1, 2) và Mệnh đề quan hệ cơ bản"] }
-      ]],
-      ["4. Khả năng sửa lỗi (Error Correction)", [
-        { title: "Độ chính xác", items: ["Nhận diện được lỗi sai ngữ pháp trong câu", "Áp dụng ngữ pháp vào văn cảnh thực tế không bị rập khuôn"] }
+      ["[SMART] 6. Competencies & Cambridge", [
+        { title: "S & M (Plan & Language)", items: ["<b>S</b>tructured Planning: (Lesson Planning) Bài giảng có mục tiêu (Aims) và các bước (Procedures) rõ ràng", "<b>M</b>indful Language: (Language Awareness) GV sử dụng ngôn ngữ chuẩn xác, phù hợp với trình độ học viên"] },
+        { title: "A & R (Class Management)", items: ["<b>A</b>ctivity Dynamics: Luân phiên tĩnh/động hợp lý (Stirrers & Settlers), CÓ REFLECT sau khi chơi", "<b>R</b>oom Management: (Classroom Management) Bao quát lớp, xử lý tình huống khéo léo, an toàn"] },
+        { title: "T (Exam Focus)", items: ["<b>T</b>arget Cambridge: Trò chơi, bài tập bám sát cấu trúc đề thi Cambridge YLE (Starters/Movers/Flyers)"] }
       ]]
     ]
   }
@@ -206,14 +242,10 @@ function renderTable() {
   const selectedType = testTypeSelector.value;
   const data = TEST_DATA[selectedType];
   
-  // Cập nhật giao diện phụ
-  document.getElementById("legend-text").innerHTML = `<b>Hướng dẫn:</b> ${data.legend}`;
-  document.getElementById("score-header").textContent = `Điểm (${data.min}-${data.max})`;
-  document.getElementById("overall-lbl").textContent = data.type === 'ielts' ? "IELTS Overall Band" : "Điểm tổng kết (1-10)";
-  
-  tbody.innerHTML = ""; // Xóa bảng cũ
+  document.getElementById("legend-text").innerHTML = data.legend;
+  document.getElementById("score-header").textContent = `Score (${data.min}-${data.max})`;
+  tbody.innerHTML = ""; 
 
-  // Render bảng mới
   data.sections.forEach((sec, si) => {
     const [title, subCategories] = sec;
     const trSec = document.createElement("tr");
@@ -233,8 +265,15 @@ function renderTable() {
       if (isFirstRowInSection) {
         rightCols = `
           <td class="savg" rowspan="${totalRows}" id="avg${si}">—</td>
-          <td rowspan="${totalRows}">
-            <textarea class="cm" placeholder="Ghi chú chi tiết / Điểm mạnh / Lỗi sai..."></textarea>
+          <td rowspan="${totalRows}" style="vertical-align: top;">
+            <div class="feedback-box">
+              <span class="fb-label fb-strong">Strengths (Điểm tốt)</span>
+              <textarea class="cm" placeholder="Detail effective techniques used..."></textarea>
+            </div>
+            <div class="feedback-box">
+              <span class="fb-label fb-weak">To Improve (Cần cải thiện)</span>
+              <textarea class="cm" placeholder="Areas needing pedagogical focus..."></textarea>
+            </div>
           </td>
         `;
         isFirstRowInSection = false;
@@ -258,18 +297,15 @@ function renderTable() {
   calc();
 }
 
-// Luật làm tròn IELTS
-function calculateIeltsRounding(score) {
-  let whole = Math.floor(score);
-  let fraction = score - whole;
-  if (fraction >= 0.75) return whole + 1.0;
-  if (fraction >= 0.25) return whole + 0.5;
-  return whole + 0.0;
+function getGrading(score) {
+    if (score < 3.0) return "Fail (Không đạt)";
+    if (score < 4.0) return "Pass (Đạt chuẩn)";
+    if (score < 4.5) return "Merit (Khá - Tốt)";
+    return "Distinction (Xuất sắc)";
 }
 
 function calc() {
   const selectedType = testTypeSelector.value;
-  const isIelts = TEST_DATA[selectedType].type === 'ielts';
   let sumSectionScores = 0;
   let activeSections = 0;
 
@@ -280,7 +316,6 @@ function calc() {
 
     if (vals.length > 0) {
       let avg = vals.reduce((a, b) => a + b, 0) / vals.length;
-      if (isIelts) avg = calculateIeltsRounding(avg);
       avgEl.textContent = avg.toFixed(1);
       sumSectionScores += avg;
       activeSections++;
@@ -295,29 +330,24 @@ function calc() {
   if (activeSections > 0) {
     let rawAvg = sumSectionScores / activeSections;
     rawAvgEl.textContent = rawAvg.toFixed(2);
-    
-    let finalResult = isIelts ? calculateIeltsRounding(rawAvg) : rawAvg;
-    overallResultEl.textContent = finalResult.toFixed(1);
-    
+    overallResultEl.textContent = getGrading(rawAvg);
   } else {
     rawAvgEl.textContent = "0.00";
-    overallResultEl.textContent = "0.0";
+    overallResultEl.textContent = "Pending";
   }
 }
 
 function clearForm() {
-  if(confirm('Xóa toàn bộ điểm và nhận xét?')){
+  if(confirm('Clear all scores and comments? (Xóa toàn bộ dữ liệu?)')){
     document.querySelectorAll('.sc').forEach(i => i.value = '');
     document.querySelectorAll('.cm').forEach(t => t.value = '');
     calc();
   }
 }
 
-// Lắng nghe sự kiện
 testTypeSelector.addEventListener("change", renderTable);
 document.addEventListener("input", e => { if (e.target.classList.contains("sc")) calc(); });
 
-// Khởi chạy mặc định
 renderTable();
 </script>
 </body>
